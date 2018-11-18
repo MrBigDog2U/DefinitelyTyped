@@ -18,6 +18,7 @@
 //                 Angela-1 <https://github.com/angela-1>
 //                 Mikael Lirbank <https://github.com/lirbank>
 //                 Hector Ribes <https://github.com/hector7>
+//                 Florian Richter <https://github.com/floric>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.3
 
@@ -706,8 +707,8 @@ export interface Collection<TSchema = Default> {
     findOneAndReplace(filter: FilterQuery<TSchema>, replacement: Object, options: FindOneAndReplaceOption, callback: MongoCallback<FindAndModifyWriteOpResultObject<TSchema>>): void;
     /** http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#findOneAndUpdate */
     findOneAndUpdate(filter: FilterQuery<TSchema>, update: Object, callback: MongoCallback<FindAndModifyWriteOpResultObject<TSchema>>): void;
-    findOneAndUpdate(filter: FilterQuery<TSchema>, update: Object, options?: FindOneAndReplaceOption): Promise<FindAndModifyWriteOpResultObject<TSchema>>;
-    findOneAndUpdate(filter: FilterQuery<TSchema>, update: Object, options: FindOneAndReplaceOption, callback: MongoCallback<FindAndModifyWriteOpResultObject<TSchema>>): void;
+    findOneAndUpdate(filter: FilterQuery<TSchema>, update: Object, options?: FindOneAndUpdateOption): Promise<FindAndModifyWriteOpResultObject<TSchema>>;
+    findOneAndUpdate(filter: FilterQuery<TSchema>, update: Object, options: FindOneAndUpdateOption, callback: MongoCallback<FindAndModifyWriteOpResultObject<TSchema>>): void;
     /** http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#geoHaystackSearch */
     geoHaystackSearch(x: number, y: number, callback: MongoCallback<any>): void;
     geoHaystackSearch(x: number, y: number, options?: GeoHaystackSearchOptions): Promise<any>;
@@ -803,71 +804,80 @@ export interface Collection<TSchema = Default> {
     /** @deprecated use updateOne, updateMany or bulkWrite */
     update(filter: FilterQuery<TSchema>, update: UpdateQuery<TSchema> | TSchema, callback: MongoCallback<WriteOpResult>): void;
     /** @deprecated use updateOne, updateMany or bulkWrite */
-    update(filter: FilterQuery<TSchema>, update: UpdateQuery<TSchema> | TSchema, options?: ReplaceOneOptions & { multi?: boolean }): Promise<WriteOpResult>;
+    update(filter: FilterQuery<TSchema>, update: UpdateQuery<TSchema> | TSchema, options?: UpdateOneOptions & { multi?: boolean }): Promise<WriteOpResult>;
     /** @deprecated use updateOne, updateMany or bulkWrite */
-    update(filter: FilterQuery<TSchema>, update: UpdateQuery<TSchema> | TSchema, options: ReplaceOneOptions & { multi?: boolean }, callback: MongoCallback<WriteOpResult>): void;
+    update(filter: FilterQuery<TSchema>, update: UpdateQuery<TSchema> | TSchema, options: UpdateOneOptions & { multi?: boolean }, callback: MongoCallback<WriteOpResult>): void;
     /** http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#updateMany */
     updateMany(filter: FilterQuery<TSchema>, update: UpdateQuery<TSchema> | TSchema, callback: MongoCallback<UpdateWriteOpResult>): void;
-    updateMany(filter: FilterQuery<TSchema>, update: UpdateQuery<TSchema> | TSchema, options?: CommonOptions & { upsert?: boolean }): Promise<UpdateWriteOpResult>;
-    updateMany(filter: FilterQuery<TSchema>, update: UpdateQuery<TSchema> | TSchema, options: CommonOptions & { upsert?: boolean }, callback: MongoCallback<UpdateWriteOpResult>): void;
+    updateMany(filter: FilterQuery<TSchema>, update: UpdateQuery<TSchema> | TSchema, options?: UpdateManyOptions): Promise<UpdateWriteOpResult>;
+    updateMany(filter: FilterQuery<TSchema>, update: UpdateQuery<TSchema> | TSchema, options: UpdateManyOptions, callback: MongoCallback<UpdateWriteOpResult>): void;
     /** http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#updateOne */
     updateOne(filter: FilterQuery<TSchema>, update: UpdateQuery<TSchema> | TSchema, callback: MongoCallback<UpdateWriteOpResult>): void;
-    updateOne(filter: FilterQuery<TSchema>, update: UpdateQuery<TSchema> | TSchema, options?: ReplaceOneOptions): Promise<UpdateWriteOpResult>;
-    updateOne(filter: FilterQuery<TSchema>, update: UpdateQuery<TSchema> | TSchema, options: ReplaceOneOptions, callback: MongoCallback<UpdateWriteOpResult>): void;
+    updateOne(filter: FilterQuery<TSchema>, update: UpdateQuery<TSchema> | TSchema, options?: UpdateOneOptions): Promise<UpdateWriteOpResult>;
+    updateOne(filter: FilterQuery<TSchema>, update: UpdateQuery<TSchema> | TSchema, options: UpdateOneOptions, callback: MongoCallback<UpdateWriteOpResult>): void;
     /** http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#watch */
     watch(pipeline?: Object[], options?: ChangeStreamOptions & { startAtClusterTime?: Timestamp, session?: ClientSession }): ChangeStream;
 }
 
+type Condition<T, P extends keyof T> = {
+    $eq?: T[P];
+    $gt?: T[P];
+    $gte?: T[P];
+    $in?: T[P][];
+    $lt?: T[P];
+    $lte?: T[P];
+    $ne?: T[P];
+    $nin?: T[P][];
+    $and?: (FilterQuery<T[P]> | T[P])[];
+    $or?: (FilterQuery<T[P]> | T[P])[];
+    $not?: (FilterQuery<T[P]> | T[P])[] | T[P];
+    $expr?: any;
+    $jsonSchema?: any;
+    $mod?: [number, number];
+    $regex?: RegExp;
+    $options?: string;
+    $text?: {
+        $search: string;
+        $language?: string;
+        $caseSensitive?: boolean;
+        $diacraticSensitive?: boolean;
+    };
+    $where: Object;
+    $geoIntersects?: Object;
+    $geoWithin?: Object;
+    $near?: Object;
+    $nearSphere?: Object;
+    $elemMatch?: Object;
+    $size?: number;
+    $bitsAllClear?: Object;
+    $bitsAllSet?: Object;
+    $bitsAnyClear?: Object;
+    $bitsAnySet?: Object;
+    [key: string]: any;
+};
+
 /** https://docs.mongodb.com/manual/reference/operator/update */
 export type UpdateQuery<T> = {
-    $inc: { [P in keyof T]?: number } | { [key: string]: number },
-    $min: { [P in keyof T]?: number } | { [key: string]: number },
-    $max: { [P in keyof T]?: number } | { [key: string]: number },
-    $mul: { [P in keyof T]?: number } | { [key: string]: number },
-    $set: Partial<T> | { [key: string]: any },
-    $setOnInsert: Partial<T> | { [key: string]: any },
-    $unset: { [P in keyof T]?: '' } | { [key: string]: '' },
-    $rename: { [key: string]: keyof T } | { [key: string]: string },
-    $currentDate: { [P in keyof T]?: (true | { $type: 'timestamp' }) } | { [key: string]: (true | { $type: 'timestamp' }) },
+    $inc?: { [P in keyof T]?: number } | { [key: string]: number };
+    $min?: { [P in keyof T]?: number } | { [key: string]: number };
+    $max?: { [P in keyof T]?: number } | { [key: string]: number };
+    $mul?: { [P in keyof T]?: number } | { [key: string]: number };
+    $set?: Partial<T> | { [key: string]: any };
+    $setOnInsert?: Partial<T> | { [key: string]: any };
+    $unset?: { [P in keyof T]?: '' } | { [key: string]: '' };
+    $rename?: { [key: string]: keyof T } | { [key: string]: string };
+    $currentDate?: { [P in keyof T]?: (true | { $type: 'date' | 'timestamp' }) } | { [key: string]: (true | { $type: 'date' | 'timestamp' }) };
+    $addToSet?: Partial<T> | { [key: string]: any };
+    $pop?: { [P in keyof T]?: -1 | 1 } | { [key: string]: -1 | 1 };
+    $pull?: Partial<T> | { [key: string]: Condition<T, keyof T> };
+    $push?: Partial<T> | { [key: string]: any };
+    $pushAll?: Partial<T> | { [key: string]: Array<any> };
+    $each?: Partial<T> | { [key: string]: Array<any> };
+    $bit?: { [P in keyof T]?: any } | { [key: string]: any };
 };
 
 export type FilterQuery<T> = {
-    [P in keyof T]?: T[P] | {
-        $eq?: T[P];
-        $gt?: T[P];
-        $gte?: T[P];
-        $in?: T[P][];
-        $lt?: T[P];
-        $lte?: T[P];
-        $ne?: T[P];
-        $nin?: T[P][];
-        $and?: (FilterQuery<T[P]> | T[P])[];
-        $or?: (FilterQuery<T[P]> | T[P])[];
-        $not?: (FilterQuery<T[P]> | T[P])[] | T[P];
-        $expr?: any;
-        $jsonSchema?: any;
-        $mod?: [number, number];
-        $regex?: RegExp;
-        $options?: string;
-        $text?: {
-            $search: string;
-            $language?: string;
-            $caseSensitive?: boolean;
-            $diacraticSensitive?: boolean;
-        };
-        $where: Object;
-        $geoIntersects?: Object;
-        $geoWithin?: Object;
-        $near?: Object;
-        $nearSphere?: Object;
-        $elemMatch?: Object;
-        $size?: number;
-        $bitsAllClear?: Object;
-        $bitsAllSet?: Object;
-        $bitsAnyClear?: Object;
-        $bitsAnySet?: Object;
-        [key: string]: any;
-    };
+    [P in keyof T]?: T[P] | Condition<T, P>;
 } | { [key: string]: any };
 
 // Documentation: http://docs.mongodb.org/manual/reference/command/collStats/
@@ -1148,13 +1158,17 @@ export interface FindAndModifyWriteOpResultObject<TSchema = Default> {
 }
 
 /** http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#findOneAndReplace */
-export interface FindOneAndReplaceOption {
+export interface FindOneAndReplaceOption extends CommonOptions {
     projection?: Object;
     sort?: Object;
     maxTimeMS?: number;
     upsert?: boolean;
     returnOriginal?: boolean;
-    session?: ClientSession;
+}
+
+/** http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#findOneAndUpdate */
+export interface FindOneAndUpdateOption extends FindOneAndReplaceOption {
+    arrayFilters?: Object[];
 }
 
 /** http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#geoHaystackSearch */
@@ -1344,6 +1358,17 @@ export interface ParallelCollectionScanOptions {
 export interface ReplaceOneOptions extends CommonOptions {
     upsert?: boolean;
     bypassDocumentValidation?: boolean;
+}
+
+/** http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#updateOne */
+export interface UpdateOneOptions extends ReplaceOneOptions {
+    arrayFilters?: Object[];
+}
+
+/** http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#updateMany */
+export interface UpdateManyOptions extends CommonOptions {
+    upsert?: boolean;
+    arrayFilters?: Object[];
 }
 
 /** http://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#~updateWriteOpResult */

@@ -14,6 +14,7 @@
 //                 Todd Bealmear <https://github.com/todd>
 //                 Nick Schultz <https://github.com/nrschultz>
 //                 Thomas Breleur <https://github.com/thomas-b>
+//                 Antoine Boisadam <https://github.com/Antoine38660>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.8
 
@@ -138,7 +139,7 @@ declare namespace sequelize {
      * @see http://docs.sequelizejs.com/en/latest/api/associations/belongs-to/
      * @see Instance
      */
-    interface BelongsToCreateAssociationMixin<TAttributes> {
+    interface BelongsToCreateAssociationMixin<TAttributes, TInstance> {
         /**
          * Create a new instance of the associated model and associate it with this.
          * @param values The values used to create the association.
@@ -147,7 +148,7 @@ declare namespace sequelize {
         (
             values?: TAttributes,
             options?: BelongsToCreateAssociationMixinOptions | CreateOptions | BelongsToSetAssociationMixinOptions
-        ): Promise<void>;
+        ): Promise<TInstance>;
     }
 
     /**
@@ -5698,6 +5699,13 @@ declare namespace sequelize {
          * Pass object to limit set of aliased operators or false to disable completely.
          */
         operatorsAliases?: boolean | OperatorsAliases;
+
+        /**
+         * Set to `true` to enable connecting over SSL.
+         *
+         * Defaults to undefined
+         */
+        ssl?: boolean;
     }
 
     /**
@@ -6207,9 +6215,9 @@ declare namespace sequelize {
          * @param options Transaction Options
          * @param autoCallback Callback for the transaction
          */
-        transaction(options: TransactionOptions,
-            autoCallback: (t: Transaction) => PromiseLike<any>): Promise<any>;
-        transaction(autoCallback: (t: Transaction) => PromiseLike<any>): Promise<any>;
+        transaction<T>(options: TransactionOptions,
+            autoCallback: (t: Transaction) => PromiseLike<T>): Promise<T>;
+        transaction<T>(autoCallback: (t: Transaction) => PromiseLike<T>): Promise<T>;
         transaction(options?: TransactionOptions): Promise<Transaction>;
 
         /**

@@ -569,6 +569,10 @@ async () => {
     </Svg>
 );
 
+() => (
+    <Svg width={100} height={50} preserveAspectRatio="none" />
+);
+
 IntentLauncherAndroid.ACTION_ACCESSIBILITY_SETTINGS === 'android.settings.ACCESSIBILITY_SETTINGS';
 IntentLauncherAndroid.ACTION_APP_NOTIFICATION_REDACTION === 'android.settings.ACTION_APP_NOTIFICATION_REDACTION';
 IntentLauncherAndroid.ACTION_CONDITION_PROVIDER_SETTINGS === 'android.settings.ACTION_CONDITION_PROVIDER_SETTINGS';
@@ -850,6 +854,52 @@ async () => {
     }
 };
 
+async () => {
+  const asset: MediaLibrary.Asset = await MediaLibrary.createAssetAsync('some-url');
+  const getAssetsOptions: MediaLibrary.GetAssetsOptions = {
+    first: 0,
+    after: 'lastAssetId',
+    album: 'albumId',
+    sortBy: MediaLibrary.SortBy.creationTime,
+    mediaType: MediaLibrary.MediaType.photo
+  };
+  const assetsList: MediaLibrary.GetAssetsResult = await MediaLibrary.getAssetsAsync(getAssetsOptions);
+  const endCursor: string = assetsList.endCursor;
+  const hasNextPage: boolean = assetsList.hasNextPage;
+  const totalCount: number = assetsList.totalCount;
+  const asset1: MediaLibrary.Asset = await MediaLibrary.getAssetInfoAsync(asset);
+  if (await MediaLibrary.deleteAssetsAsync(assetsList.assets)) {
+    console.log('assets deleted');
+  }
+  const albums: MediaLibrary.Album[] = await MediaLibrary.getAlbumsAsync();
+  const album: MediaLibrary.Album | null = await MediaLibrary.getAlbumAsync('albumName');
+  const album1: MediaLibrary.Album = await MediaLibrary.createAlbumAsync('albumName', asset1);
+  if (await MediaLibrary.addAssetsToAlbumAsync([asset, asset1], album1, true)) {
+    console.log('assets added');
+  }
+
+  const moments: MediaLibrary.Album[] = await MediaLibrary.getMomentsAsync();
+
+  switch (getAssetsOptions.mediaType) {
+    case MediaLibrary.MediaType.audio:
+    case MediaLibrary.MediaType.photo:
+    case MediaLibrary.MediaType.video:
+    case MediaLibrary.MediaType.unknow:
+      return true;
+  }
+
+  switch (getAssetsOptions.sortBy) {
+    case MediaLibrary.SortBy.default:
+    case MediaLibrary.SortBy.id:
+    case MediaLibrary.SortBy.creationTime:
+    case MediaLibrary.SortBy.modificationTime:
+    case MediaLibrary.SortBy.mediaType:
+    case MediaLibrary.SortBy.width:
+    case MediaLibrary.SortBy.height:
+    case MediaLibrary.SortBy.duration:
+      return true;
+  }
+};
 // #region MediaLibrary
 async () => {
   const mlAsset: MediaLibrary.Asset = await MediaLibrary.createAssetAsync('localUri');

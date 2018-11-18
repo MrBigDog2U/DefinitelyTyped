@@ -55,6 +55,7 @@ import {
     SectionListRenderItemInfo,
     Switch,
     RefreshControl,
+    RegisteredStyle,
     TabBarIOS,
     NativeModules,
     MaskedViewIOS,
@@ -174,6 +175,14 @@ const imageStyle: StyleProp<ImageStyle> = {
 const viewProperty = StyleSheet.flatten(viewStyle).backgroundColor;
 const textProperty = StyleSheet.flatten(textStyle).fontSize;
 const imageProperty = StyleSheet.flatten(imageStyle).resizeMode;
+
+const s = StyleSheet.create({
+  shouldWork: {
+    fontWeight: '900', // if we comment this line, errors gone
+    marginTop: 5, // if this line commented, errors also gone
+  },
+})
+const f1: RegisteredStyle<TextStyle> = s.shouldWork
 
 const testNativeSyntheticEvent = <T extends {}>(e: NativeSyntheticEvent<T>): void => {
     e.isDefaultPrevented();
@@ -330,6 +339,8 @@ export class FlatListTest extends React.Component<FlatListProps<number>, {}> {
                 data={[1, 2, 3, 4, 5]}
                 renderItem={this._renderItem}
                 ItemSeparatorComponent={this._renderSeparator}
+                ListFooterComponent={null}
+                ListHeaderComponent={null}
             />
         );
     }
@@ -744,8 +755,16 @@ class AccessibilityTest extends React.Component {
                 importantForAccessibility={"no-hide-descendants"}
                 accessibilityTraits={'none'}
                 onAccessibilityTap={() => {}}
+                accessibilityRole="header"
+                accessibilityStates="selected"
+                accessibilityHint="Very importent header"
             >
-                <Text accessibilityTraits={['key', 'text']}>Text</Text>
+                <Text
+                    accessibilityTraits={['key', 'text']}
+                    accessibilityIgnoresInvertColors
+                >
+                    Text
+                </Text>
                 <View />
             </View>
         );
@@ -812,4 +831,8 @@ const NativeBridgedComponent = requireNativeComponent("NativeBridgedComponent", 
 
 const SwitchColorTest = () => (
     <Switch trackColor={{ true: 'pink', false: 'red'}} />
+)
+
+const SwitchThumbColorTest = () => (
+    <Switch thumbColor={'red'} />
 )

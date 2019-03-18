@@ -1,5 +1,5 @@
-// Type definitions for ramda 0.25
-// Project: https://github.com/donnut/typescript-ramda
+// Type definitions for ramda 0.26
+// Project: https://github.com/donnut/typescript-ramda, https://ramdajs.com
 // Definitions by: Erwin Poeze <https://github.com/donnut>
 //                 Tycho Grouwstra <https://github.com/tycho01>
 //                 Matt DeKrey <https://github.com/mdekrey>
@@ -24,8 +24,12 @@
 //                 Rayhaneh Banyassady <https://github.com/rayhaneh>
 //                 Ryan McCuaig <https://github.com/rgm>
 //                 Drew Wyatt <https://github.com/drewwyatt>
+//                 John Ottenlips <https://github.com/jottenlips>
+//                 Nitesh Phadatare <https://github.com/minitesh>
+//                 Krantisinh Deshmukh <https://github.com/krantisinh>
+//                 Pierre-Antoine Mills <https://github.com/pirix-gh>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-// TypeScript Version: 2.8
+// TypeScript Version: 3.2
 
 /// <reference path="./es/add.d.ts" />
 /// <reference path="./es/addIndex.d.ts" />
@@ -109,6 +113,7 @@
 /// <reference path="./es/indexBy.d.ts" />
 /// <reference path="./es/indexOf.d.ts" />
 /// <reference path="./es/init.d.ts" />
+/// <reference path="./es/innerJoin.d.ts" />
 /// <reference path="./es/insertAll.d.ts" />
 /// <reference path="./es/insert.d.ts" />
 /// <reference path="./es/intersection.d.ts" />
@@ -160,6 +165,7 @@
 /// <reference path="./es/minBy.d.ts" />
 /// <reference path="./es/min.d.ts" />
 /// <reference path="./es/modulo.d.ts" />
+/// <reference path="./es/move.d.ts" />
 /// <reference path="./es/multiply.d.ts" />
 /// <reference path="./es/nAry.d.ts" />
 /// <reference path="./es/negate.d.ts" />
@@ -269,6 +275,254 @@
 /// <reference path="./es/zip.d.ts" />
 /// <reference path="./es/zipObj.d.ts" />
 /// <reference path="./es/zipWith.d.ts" />
+/// <reference path="./es/includes.d.ts" />
+/// <reference path="./tools.d.ts" />
+
+/// <reference path="./src/add.d.ts" />
+/// <reference path="./src/addIndex.d.ts" />
+/// <reference path="./src/adjust.d.ts" />
+/// <reference path="./src/all.d.ts" />
+/// <reference path="./src/allPass.d.ts" />
+/// <reference path="./src/always.d.ts" />
+/// <reference path="./src/and.d.ts" />
+/// <reference path="./src/any.d.ts" />
+/// <reference path="./src/anyPass.d.ts" />
+/// <reference path="./src/ap.d.ts" />
+/// <reference path="./src/aperture.d.ts" />
+/// <reference path="./src/append.d.ts" />
+/// <reference path="./src/apply.d.ts" />
+/// <reference path="./src/applySpec.d.ts" />
+/// <reference path="./src/applyTo.d.ts" />
+/// <reference path="./src/ascend.d.ts" />
+/// <reference path="./src/assoc.d.ts" />
+/// <reference path="./src/assocPath.d.ts" />
+/// <reference path="./src/binary.d.ts" />
+/// <reference path="./src/bind.d.ts" />
+/// <reference path="./src/both.d.ts" />
+/// <reference path="./src/call.d.ts" />
+/// <reference path="./src/chain.d.ts" />
+/// <reference path="./src/clamp.d.ts" />
+/// <reference path="./src/clone.d.ts" />
+/// <reference path="./src/comparator.d.ts" />
+/// <reference path="./src/complement.d.ts" />
+/// <reference path="./src/compose.d.ts" />
+/// <reference path="./src/composeK.d.ts" />
+/// <reference path="./src/composeP.d.ts" />
+/// <reference path="./src/concat.d.ts" />
+/// <reference path="./src/cond.d.ts" />
+/// <reference path="./src/construct.d.ts" />
+/// <reference path="./src/constructN.d.ts" />
+/// <reference path="./src/contains.d.ts" />
+/// <reference path="./src/converge.d.ts" />
+/// <reference path="./src/countBy.d.ts" />
+/// <reference path="./src/curry.d.ts" />
+/// <reference path="./src/curryN.d.ts" />
+/// <reference path="./src/dec.d.ts" />
+/// <reference path="./src/defaultTo.d.ts" />
+/// <reference path="./src/descend.d.ts" />
+/// <reference path="./src/difference.d.ts" />
+/// <reference path="./src/differenceWith.d.ts" />
+/// <reference path="./src/dissoc.d.ts" />
+/// <reference path="./src/dissocPath.d.ts" />
+/// <reference path="./src/divide.d.ts" />
+/// <reference path="./src/drop.d.ts" />
+/// <reference path="./src/dropLast.d.ts" />
+/// <reference path="./src/dropLastWhile.d.ts" />
+/// <reference path="./src/either.d.ts" />
+/// <reference path="./src/empty.d.ts" />
+/// <reference path="./src/endsWith.d.ts" />
+/// <reference path="./src/eqBy.d.ts" />
+/// <reference path="./src/eqProps.d.ts" />
+/// <reference path="./src/equals.d.ts" />
+/// <reference path="./src/evolve.d.ts" />
+/// <reference path="./src/F.d.ts" />
+/// <reference path="./src/filter.d.ts" />
+/// <reference path="./src/find.d.ts" />
+/// <reference path="./src/findIndex.d.ts" />
+/// <reference path="./src/findLast.d.ts" />
+/// <reference path="./src/findLastIndex.d.ts" />
+/// <reference path="./src/flatten.d.ts" />
+/// <reference path="./src/flip.d.ts" />
+/// <reference path="./src/forEach.d.ts" />
+/// <reference path="./src/forEachObjIndexed.d.ts" />
+/// <reference path="./src/fromPairs.d.ts" />
+/// <reference path="./src/groupBy.d.ts" />
+/// <reference path="./src/groupWith.d.ts" />
+/// <reference path="./src/gt.d.ts" />
+/// <reference path="./src/gte.d.ts" />
+/// <reference path="./src/has.d.ts" />
+/// <reference path="./src/hasIn.d.ts" />
+/// <reference path="./src/head.d.ts" />
+/// <reference path="./src/identical.d.ts" />
+/// <reference path="./src/identity.d.ts" />
+/// <reference path="./src/ifElse.d.ts" />
+/// <reference path="./src/inc.d.ts" />
+/// <reference path="./src/indexBy.d.ts" />
+/// <reference path="./src/indexOf.d.ts" />
+/// <reference path="./src/init.d.ts" />
+/// <reference path="./src/innerJoin.d.ts" />
+/// <reference path="./src/insertAll.d.ts" />
+/// <reference path="./src/insert.d.ts" />
+/// <reference path="./src/intersection.d.ts" />
+/// <reference path="./src/intersectionWith.d.ts" />
+/// <reference path="./src/intersperse.d.ts" />
+/// <reference path="./src/into.d.ts" />
+/// <reference path="./src/invert.d.ts" />
+/// <reference path="./src/invertObj.d.ts" />
+/// <reference path="./src/invoker.d.ts" />
+/// <reference path="./src/isArrayLike.d.ts" />
+/// <reference path="./src/is.d.ts" />
+/// <reference path="./src/isEmpty.d.ts" />
+/// <reference path="./src/isNaN.d.ts" />
+/// <reference path="./src/isNil.d.ts" />
+/// <reference path="./src/join.d.ts" />
+/// <reference path="./src/juxt.d.ts" />
+/// <reference path="./src/keys.d.ts" />
+/// <reference path="./src/keysIn.d.ts" />
+/// <reference path="./src/last.d.ts" />
+/// <reference path="./src/lastIndexOf.d.ts" />
+/// <reference path="./src/length.d.ts" />
+/// <reference path="./src/lens.d.ts" />
+/// <reference path="./src/lensIndex.d.ts" />
+/// <reference path="./src/lensPath.d.ts" />
+/// <reference path="./src/lensProp.d.ts" />
+/// <reference path="./src/lift.d.ts" />
+/// <reference path="./src/lt.d.ts" />
+/// <reference path="./src/lte.d.ts" />
+/// <reference path="./src/mapAccum.d.ts" />
+/// <reference path="./src/mapAccumRight.d.ts" />
+/// <reference path="./src/map.d.ts" />
+/// <reference path="./src/mapObjIndexed.d.ts" />
+/// <reference path="./src/match.d.ts" />
+/// <reference path="./src/mathMod.d.ts" />
+/// <reference path="./src/maxBy.d.ts" />
+/// <reference path="./src/max.d.ts" />
+/// <reference path="./src/mean.d.ts" />
+/// <reference path="./src/median.d.ts" />
+/// <reference path="./src/memoize.d.ts" />
+/// <reference path="./src/memoizeWith.d.ts" />
+/// <reference path="./src/mergeAll.d.ts" />
+/// <reference path="./src/mergeDeepLeft.d.ts" />
+/// <reference path="./src/mergeDeepRight.d.ts" />
+/// <reference path="./src/mergeDeepWith.d.ts" />
+/// <reference path="./src/mergeDeepWithKey.d.ts" />
+/// <reference path="./src/merge.d.ts" />
+/// <reference path="./src/mergeWith.d.ts" />
+/// <reference path="./src/mergeWithKey.d.ts" />
+/// <reference path="./src/minBy.d.ts" />
+/// <reference path="./src/min.d.ts" />
+/// <reference path="./src/modulo.d.ts" />
+/// <reference path="./src/move.d.ts" />
+/// <reference path="./src/multiply.d.ts" />
+/// <reference path="./src/nAry.d.ts" />
+/// <reference path="./src/negate.d.ts" />
+/// <reference path="./src/none.d.ts" />
+/// <reference path="./src/not.d.ts" />
+/// <reference path="./src/nthArg.d.ts" />
+/// <reference path="./src/nth.d.ts" />
+/// <reference path="./src/objOf.d.ts" />
+/// <reference path="./src/of.d.ts" />
+/// <reference path="./src/omit.d.ts" />
+/// <reference path="./src/once.d.ts" />
+/// <reference path="./src/or.d.ts" />
+/// <reference path="./src/over.d.ts" />
+/// <reference path="./src/pair.d.ts" />
+/// <reference path="./src/partial.d.ts" />
+/// <reference path="./src/partialRight.d.ts" />
+/// <reference path="./src/partition.d.ts" />
+/// <reference path="./src/path.d.ts" />
+/// <reference path="./src/pathEq.d.ts" />
+/// <reference path="./src/pathOr.d.ts" />
+/// <reference path="./src/pathSatisfies.d.ts" />
+/// <reference path="./src/pickAll.d.ts" />
+/// <reference path="./src/pickBy.d.ts" />
+/// <reference path="./src/pick.d.ts" />
+/// <reference path="./src/pipe.d.ts" />
+/// <reference path="./src/pipeK.d.ts" />
+/// <reference path="./src/pipeP.d.ts" />
+/// <reference path="./src/pluck.d.ts" />
+/// <reference path="./src/prepend.d.ts" />
+/// <reference path="./src/product.d.ts" />
+/// <reference path="./src/project.d.ts" />
+/// <reference path="./src/prop.d.ts" />
+/// <reference path="./src/propEq.d.ts" />
+/// <reference path="./src/propIs.d.ts" />
+/// <reference path="./src/propOr.d.ts" />
+/// <reference path="./src/propSatisfies.d.ts" />
+/// <reference path="./src/props.d.ts" />
+/// <reference path="./src/range.d.ts" />
+/// <reference path="./src/reduceBy.d.ts" />
+/// <reference path="./src/reduced.d.ts" />
+/// <reference path="./src/reduce.d.ts" />
+/// <reference path="./src/reduceRight.d.ts" />
+/// <reference path="./src/reduceWhile.d.ts" />
+/// <reference path="./src/reject.d.ts" />
+/// <reference path="./src/remove.d.ts" />
+/// <reference path="./src/repeat.d.ts" />
+/// <reference path="./src/replace.d.ts" />
+/// <reference path="./src/reverse.d.ts" />
+/// <reference path="./src/scan.d.ts" />
+/// <reference path="./src/set.d.ts" />
+/// <reference path="./src/slice.d.ts" />
+/// <reference path="./src/sortBy.d.ts" />
+/// <reference path="./src/sort.d.ts" />
+/// <reference path="./src/sortWith.d.ts" />
+/// <reference path="./src/splitAt.d.ts" />
+/// <reference path="./src/split.d.ts" />
+/// <reference path="./src/splitEvery.d.ts" />
+/// <reference path="./src/splitWhen.d.ts" />
+/// <reference path="./src/startsWith.d.ts" />
+/// <reference path="./src/subtract.d.ts" />
+/// <reference path="./src/sum.d.ts" />
+/// <reference path="./src/symmetricDifference.d.ts" />
+/// <reference path="./src/symmetricDifferenceWith.d.ts" />
+/// <reference path="./src/tail.d.ts" />
+/// <reference path="./src/take.d.ts" />
+/// <reference path="./src/takeLast.d.ts" />
+/// <reference path="./src/takeLastWhile.d.ts" />
+/// <reference path="./src/takeWhile.d.ts" />
+/// <reference path="./src/tap.d.ts" />
+/// <reference path="./src/T.d.ts" />
+/// <reference path="./src/test.d.ts" />
+/// <reference path="./src/times.d.ts" />
+/// <reference path="./src/toLower.d.ts" />
+/// <reference path="./src/toPairs.d.ts" />
+/// <reference path="./src/toPairsIn.d.ts" />
+/// <reference path="./src/toString.d.ts" />
+/// <reference path="./src/toUpper.d.ts" />
+/// <reference path="./src/transduce.d.ts" />
+/// <reference path="./src/transpose.d.ts" />
+/// <reference path="./src/traverse.d.ts" />
+/// <reference path="./src/trim.d.ts" />
+/// <reference path="./src/tryCatch.d.ts" />
+/// <reference path="./src/type.d.ts" />
+/// <reference path="./src/unapply.d.ts" />
+/// <reference path="./src/unary.d.ts" />
+/// <reference path="./src/uncurryN.d.ts" />
+/// <reference path="./src/unfold.d.ts" />
+/// <reference path="./src/union.d.ts" />
+/// <reference path="./src/unionWith.d.ts" />
+/// <reference path="./src/uniqBy.d.ts" />
+/// <reference path="./src/uniq.d.ts" />
+/// <reference path="./src/uniqWith.d.ts" />
+/// <reference path="./src/unless.d.ts" />
+/// <reference path="./src/unnest.d.ts" />
+/// <reference path="./src/until.d.ts" />
+/// <reference path="./src/update.d.ts" />
+/// <reference path="./src/useWith.d.ts" />
+/// <reference path="./src/values.d.ts" />
+/// <reference path="./src/valuesIn.d.ts" />
+/// <reference path="./src/view.d.ts" />
+/// <reference path="./src/when.d.ts" />
+/// <reference path="./src/where.d.ts" />
+/// <reference path="./src/whereEq.d.ts" />
+/// <reference path="./src/without.d.ts" />
+/// <reference path="./src/wrap.d.ts" />
+/// <reference path="./src/xprod.d.ts" />
+/// <reference path="./src/zip.d.ts" />
+/// <reference path="./src/zipObj.d.ts" />
+/// <reference path="./src/zipWith.d.ts" />
+/// <reference path="./src/includes.d.ts" />
 
 declare let R: R.Static;
 
@@ -355,81 +609,13 @@ declare namespace R {
 
     // Represents all objects evolvable with Evolver E
     type Evolvable<E extends Evolver> = {
-        [P in keyof E]?: E[P] extends (value: infer V) => any ? V :
-            E[P] extends Evolver ? Evolvable<E[P]> :
-            never
+        [P in keyof E]?: Evolved<E[P]>;
     };
 
-    // @see https://gist.github.com/donnut/fd56232da58d25ceecf1, comment by @albrow
-    interface CurriedTypeGuard2<T1, T2, R extends T2> {
-        (t1: T1): (t2: T2) => t2 is R;
-        (t1: T1, t2: T2): t2 is R;
-    }
-
-    interface CurriedTypeGuard3<T1, T2, T3, R extends T3> {
-        (t1: T1): CurriedTypeGuard2<T2, T3, R>;
-        (t1: T1, t2: T2): (t3: T3) => t3 is R;
-        (t1: T1, t2: T2, t3: T3): t3 is R;
-    }
-
-    interface CurriedTypeGuard4<T1, T2, T3, T4, R extends T4> {
-        (t1: T1): CurriedTypeGuard3<T2, T3, T4, R>;
-        (t1: T1, t2: T2): CurriedTypeGuard2<T3, T4, R>;
-        (t1: T1, t2: T2, t3: T3): (t4: T4) => t4 is R;
-        (t1: T1, t2: T2, t3: T3, t4: T4): t4 is R;
-    }
-
-    interface CurriedTypeGuard5<T1, T2, T3, T4, T5, R extends T5> {
-        (t1: T1): CurriedTypeGuard4<T2, T3, T4, T5, R>;
-        (t1: T1, t2: T2): CurriedTypeGuard3<T3, T4, T5, R>;
-        (t1: T1, t2: T2, t3: T3): CurriedTypeGuard2<T4, T5, R>;
-        (t1: T1, t2: T2, t3: T3, t4: T4): (t5: T5) => t5 is R;
-        (t1: T1, t2: T2, t3: T3, t4: T4, t5: T5): t5 is R;
-    }
-
-    interface CurriedTypeGuard6<T1, T2, T3, T4, T5, T6, R extends T6> {
-        (t1: T1): CurriedTypeGuard5<T2, T3, T4, T5, T6, R>;
-        (t1: T1, t2: T2): CurriedTypeGuard4<T3, T4, T5, T6, R>;
-        (t1: T1, t2: T2, t3: T3): CurriedTypeGuard3<T4, T5, T6, R>;
-        (t1: T1, t2: T2, t3: T3, t4: T4): CurriedTypeGuard2<T5, T6, R>;
-        (t1: T1, t2: T2, t3: T3, t4: T4, t5: T5): (t6: T6) => t6 is R;
-        (t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6): t6 is R;
-    }
-
-    interface CurriedFunction2<T1, T2, R> {
-        (t1: T1): (t2: T2) => R;
-        (t1: T1, t2: T2): R;
-    }
-
-    interface CurriedFunction3<T1, T2, T3, R> {
-        (t1: T1): CurriedFunction2<T2, T3, R>;
-        (t1: T1, t2: T2): (t3: T3) => R;
-        (t1: T1, t2: T2, t3: T3): R;
-    }
-
-    interface CurriedFunction4<T1, T2, T3, T4, R> {
-        (t1: T1): CurriedFunction3<T2, T3, T4, R>;
-        (t1: T1, t2: T2): CurriedFunction2<T3, T4, R>;
-        (t1: T1, t2: T2, t3: T3): (t4: T4) => R;
-        (t1: T1, t2: T2, t3: T3, t4: T4): R;
-    }
-
-    interface CurriedFunction5<T1, T2, T3, T4, T5, R> {
-        (t1: T1): CurriedFunction4<T2, T3, T4, T5, R>;
-        (t1: T1, t2: T2): CurriedFunction3<T3, T4, T5, R>;
-        (t1: T1, t2: T2, t3: T3): CurriedFunction2<T4, T5, R>;
-        (t1: T1, t2: T2, t3: T3, t4: T4): (t5: T5) => R;
-        (t1: T1, t2: T2, t3: T3, t4: T4, t5: T5): R;
-    }
-
-    interface CurriedFunction6<T1, T2, T3, T4, T5, T6, R> {
-        (t1: T1): CurriedFunction5<T2, T3, T4, T5, T6, R>;
-        (t1: T1, t2: T2): CurriedFunction4<T3, T4, T5, T6, R>;
-        (t1: T1, t2: T2, t3: T3): CurriedFunction3<T4, T5, T6, R>;
-        (t1: T1, t2: T2, t3: T3, t4: T4): CurriedFunction2<T5, T6, R>;
-        (t1: T1, t2: T2, t3: T3, t4: T4, t5: T5): (t6: T6) => R;
-        (t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6): R;
-    }
+    type Evolved<T> =
+        T extends (value: infer V) => any ? V :
+        T extends Evolver ? Evolvable<T> :
+        never;
 
     interface Placeholder { __isRamdaPlaceholder__: true; }
 
@@ -457,18 +643,18 @@ declare namespace R {
          * Creates a new list iteration function from an existing one by adding two new parameters to its callback
          * function: the current index, and the entire list.
          */
-        addIndex<T, U>(fn: (f: (item: T) => U, list: T[]) => U[]): CurriedFunction2<(item: T, idx: number, list?: T[]) => U, ReadonlyArray<T>, U[]>;
+        addIndex<T, U>(fn: (f: (item: T) => U, list: T[]) => U[]): Curry.Curry<(a: (item: T, idx: number, list?: T[]) => U, b: ReadonlyArray<T>) => U[]>;
         /* Special case for forEach */
-        addIndex<T>(fn: (f: (item: T) => void, list: T[]) => T[]): CurriedFunction2<(item: T, idx: number, list?: T[]) => void, ReadonlyArray<T>, T[]>;
+        addIndex<T>(fn: (f: (item: T) => void, list: T[]) => T[]): Curry.Curry<(a: (item: T, idx: number, list?: T[]) => void, b: ReadonlyArray<T>) => T[]>;
         /* Special case for reduce */
-        addIndex<T, U>(fn: (f: (acc: U, item: T) => U, aci: U, list: T[]) => U): CurriedFunction3<(acc: U, item: T, idx: number, list?: T[]) => U, U, ReadonlyArray<T>, U>;
+        addIndex<T, U>(fn: (f: (acc: U, item: T) => U, aci: U, list: T[]) => U): Curry.Curry<(a: (acc: U, item: T, idx: number, list?: T[]) => U, b: U, c: ReadonlyArray<T>) => U>;
 
         /**
          * Applies a function to the value at the given index of an array, returning a new copy of the array with the
          * element at the given index replaced with the result of the function application.
          */
-        adjust<T>(fn: (a: T) => T, index: number, list: ReadonlyArray<T>): T[];
-        adjust<T>(fn: (a: T) => T, index: number): (list: ReadonlyArray<T>) => T[];
+        adjust<T>(index: number, fn: (a: T) => T, list: ReadonlyArray<T>): T[];
+        adjust<T>(index: number, fn: (a: T) => T): (list: ReadonlyArray<T>) => T[];
 
         /**
          * Returns true if all elements of the list match the predicate, false if there are any that don't.
@@ -563,6 +749,8 @@ declare namespace R {
         /**
          * Makes a shallow clone of an object, setting or overriding the specified property with the given value.
          */
+        assoc<T, U>(__: Placeholder, val: T, obj: U): <K extends string>(prop: K) => Record<K, T> & U;
+        assoc<U, K extends string>(prop: K, __: Placeholder, obj: U): <T>(val: T) => Record<K, T> & U;
         assoc<T, U, K extends string>(prop: K, val: T, obj: U): Record<K, T> & U;
         assoc<T, K extends string>(prop: K, val: T): <U>(obj: U) => Record<K, T> & U;
         assoc<K extends string>(prop: K): <T, U>(val: T, obj: U) => Record<K, T> & U;
@@ -571,9 +759,11 @@ declare namespace R {
          * Makes a shallow clone of an object, setting or overriding the nodes required to create the given path, and
          * placing the specific value at the tail end of that path.
          */
+        assocPath<T, U>(__: Placeholder, val: T, obj: U): (path: Path) => U;
+        assocPath<T, U>(path: Path, __: Placeholder, obj: U): (val: T) => U;
         assocPath<T, U>(path: Path, val: T, obj: U): U;
         assocPath<T, U>(path: Path, val: T): (obj: U) => U;
-        assocPath<T, U>(path: Path): CurriedFunction2<T, U, U>;
+        assocPath<T, U>(path: Path): Curry.Curry<(a: T, b: U) => U>;
 
         /**
          * Wraps a function of any arity (including nullary) in a function that accepts exactly 2
@@ -777,6 +967,7 @@ declare namespace R {
          * matches, fn returns undefined.
          */
         cond(fns: ReadonlyArray<[Pred, (...a: any[]) => any]>): (...a: any[]) => any;
+        cond<A, B>(fns: ReadonlyArray<[SafePred<A>, (...a: A[]) => B]>): (...a: A[]) => B;
 
         /**
          * Wraps a constructor function inside a curried function that can be called with the same arguments and returns the same type.
@@ -824,17 +1015,7 @@ declare namespace R {
          * Returns a curried equivalent of the provided function. The curried function has two unusual capabilities.
          * First, its arguments needn't be provided one at a time.
          */
-        curry<T1, T2, TResult extends T2>(fn: (a: T1, b: T2) => b is TResult): CurriedTypeGuard2<T1, T2, TResult>;
-        curry<T1, T2, T3, TResult extends T3>(fn: (a: T1, b: T2, c: T3) => c is TResult): CurriedTypeGuard3<T1, T2, T3, TResult>;
-        curry<T1, T2, T3, T4, TResult extends T4>(fn: (a: T1, b: T2, c: T3, d: T4) => d is TResult): CurriedTypeGuard4<T1, T2, T3, T4, TResult>;
-        curry<T1, T2, T3, T4, T5, TResult extends T5>(fn: (a: T1, b: T2, c: T3, d: T4, e: T5) => e is TResult): CurriedTypeGuard5<T1, T2, T3, T4, T5, TResult>;
-        curry<T1, T2, T3, T4, T5, T6, TResult extends T6>(fn: (a: T1, b: T2, c: T3, d: T4, e: T5, f: T6) => f is TResult): CurriedTypeGuard6<T1, T2, T3, T4, T5, T6, TResult>;
-        curry<T1, T2, TResult>(fn: (a: T1, b: T2) => TResult): CurriedFunction2<T1, T2, TResult>;
-        curry<T1, T2, T3, TResult>(fn: (a: T1, b: T2, c: T3) => TResult): CurriedFunction3<T1, T2, T3, TResult>;
-        curry<T1, T2, T3, T4, TResult>(fn: (a: T1, b: T2, c: T3, d: T4) => TResult): CurriedFunction4<T1, T2, T3, T4, TResult>;
-        curry<T1, T2, T3, T4, T5, TResult>(fn: (a: T1, b: T2, c: T3, d: T4, e: T5) => TResult): CurriedFunction5<T1, T2, T3, T4, T5, TResult>;
-        curry<T1, T2, T3, T4, T5, T6, TResult>(fn: (a: T1, b: T2, c: T3, d: T4, e: T5, f: T6) => TResult): CurriedFunction6<T1, T2, T3, T4, T5, T6, TResult>;
-        curry(fn: (...a: any[]) => any): (...a: any[]) => any;
+        curry<F extends (...args: any) => any>(f: F): Curry.Curry<F>;
 
         /**
          * Returns a curried equivalent of the provided function, with the specified arity. The curried function has
@@ -959,7 +1140,7 @@ declare namespace R {
          */
         eqBy<T, U = T>(fn: (a: T) => U, a: T, b: T): boolean;
         eqBy<T, U = T>(fn: (a: T) => U, a: T): (b: T) => boolean;
-        eqBy<T, U = T>(fn: (a: T) => U): CurriedFunction2<T, T, boolean>;
+        eqBy<T, U = T>(fn: (a: T) => U): Curry.Curry<(a: T, b: T) => boolean>;
 
         /**
          * Reports whether two functions have the same value for the specified property.
@@ -1122,11 +1303,22 @@ declare namespace R {
          * of the condition predicate.
          */
         ifElse(fn: Pred, onTrue: Arity1Fn, onFalse: Arity1Fn): Arity1Fn;
+        ifElse(fn: Pred, onTrue: Arity2Fn, onFalse: Arity2Fn): Arity2Fn;
 
         /**
          * Increments its argument.
          */
         inc(n: number): number;
+
+        /**
+         * Given a target, this function checks a list for the target and returns a boolean.
+         * Given a string, this function checks for the string in another string or list and returns
+         * a boolean.
+         */
+        includes(s: string, list: ReadonlyArray<string> | string): boolean;
+        includes(s: string): (list: ReadonlyArray<string> | string)  => boolean;
+        includes<T>(target: T, list: ReadonlyArray<T>): boolean;
+        includes<T>(target: T): (list: ReadonlyArray<T>) => boolean;
 
         /**
          * Given a function that generates a key, turns a list of objects into an object indexing the objects
@@ -1148,6 +1340,23 @@ declare namespace R {
          */
         init<T>(list: ReadonlyArray<T>): T[];
         init(list: string): string;
+
+        /**
+         * Takes a predicate `pred`, a list `xs`, and a list `ys`, and returns a list
+         * `xs'` comprising each of the elements of `xs` which is equal to one or more
+         * elements of `ys` according to `pred`.
+         *
+         * `pred` must be a binary function expecting an element from each list.
+         *
+         * `xs`, `ys`, and `xs'` are treated as sets, semantically, so ordering should
+         * not be significant, but since `xs'` is ordered the implementation guarantees
+         * that its values are in the same order as they appear in `xs`. Duplicates are
+         * not removed, so `xs'` may contain duplicates if `xs` contains duplicates.
+         */
+
+        innerJoin<T1, T2>(pred: (a: T1, b: T2) => boolean, list1: ReadonlyArray<T1>, list2: ReadonlyArray<T2>): T1[];
+        innerJoin<T1, T2>(pred: (a: T1, b: T2) => boolean): (list1: ReadonlyArray<T1>, list2: ReadonlyArray<T2>) => T1[];
+        innerJoin<T1, T2>(pred: (a: T1, b: T2) => boolean, list1: ReadonlyArray<T1>): (list2: ReadonlyArray<T2>) => T1[];
 
         /**
          * Inserts the supplied element into the list, at index index. Note that
@@ -1405,7 +1614,7 @@ declare namespace R {
          */
         maxBy<T>(keyFn: (a: T) => Ord, a: T, b: T): T;
         maxBy<T>(keyFn: (a: T) => Ord, a: T): (b: T) => T;
-        maxBy<T>(keyFn: (a: T) => Ord): CurriedFunction2<T, T, T>;
+        maxBy<T>(keyFn: (a: T) => Ord): Curry.Curry<(a: T, b: T) => T>;
 
         /**
          * Returns the mean of the given list of numbers.
@@ -1519,7 +1728,7 @@ declare namespace R {
          */
         minBy<T>(keyFn: (a: T) => Ord, a: T, b: T): T;
         minBy<T>(keyFn: (a: T) => Ord, a: T): (b: T) => T;
-        minBy<T>(keyFn: (a: T) => Ord): CurriedFunction2<T, T, T>;
+        minBy<T>(keyFn: (a: T) => Ord): Curry.Curry<(a: T, b: T) => T>;
 
         /**
          * Divides the second parameter by the first and returns the remainder.
@@ -1537,6 +1746,17 @@ declare namespace R {
          */
         multiply(a: number, b: number): number;
         multiply(a: number): (b: number) => number;
+
+        /**
+         * Moves an item, at index `from`, to index `to`, in a `list` of elements.
+         * A new list will be created containing the new elements order.
+         */
+        move<T>(from: number, to: number, list: ReadonlyArray<T>): T[];
+        move(from: number, to: number): <T>(list: ReadonlyArray<T>) => T[];
+        move(from: number): {
+            <T>(to: number, list: ReadonlyArray<T>): T[];
+            (to: number): <T>(list: ReadonlyArray<T>) => T[];
+        };
 
         /**
          * Wraps a function of any arity (including nullary) in a function that accepts exactly n parameters.
@@ -1677,7 +1897,7 @@ declare namespace R {
          */
         pathEq(path: Path, val: any, obj: any): boolean;
         pathEq(path: Path, val: any): (obj: any) => boolean;
-        pathEq(path: Path): CurriedFunction2<any, any, boolean>;
+        pathEq(path: Path): Curry.Curry<(a: any, b: any) => boolean>;
 
         /**
          * If the given, non-null object has a value at the given path, returns the value at that path.
@@ -1685,14 +1905,14 @@ declare namespace R {
          */
         pathOr<T>(defaultValue: T, path: Path, obj: any): any;
         pathOr<T>(defaultValue: T, path: Path): (obj: any) => any;
-        pathOr<T>(defaultValue: T): CurriedFunction2<Path, any, any>;
+        pathOr<T>(defaultValue: T): Curry.Curry<(a: Path, b: any) => any>;
 
         /**
          * Returns true if the specified object property at given path satisfies the given predicate; false otherwise.
          */
         pathSatisfies<T, U>(pred: (val: T) => boolean, path: Path, obj: U): boolean;
         pathSatisfies<T, U>(pred: (val: T) => boolean, path: Path): (obj: U) => boolean;
-        pathSatisfies<T, U>(pred: (val: T) => boolean): CurriedFunction2<Path, U, boolean>;
+        pathSatisfies<T, U>(pred: (val: T) => boolean): Curry.Curry<(a: Path, b: U) => boolean>;
 
         /**
          * Returns a partial copy of an object containing only the keys specified.  If the key does not exist, the
@@ -2055,7 +2275,7 @@ declare namespace R {
         /**
          * Returns a new list by plucking the same named property off all objects in the list supplied.
          */
-        pluck<P extends string, T>(p: P, list: ReadonlyArray<Record<P, T>>): T[];
+        pluck<K extends keyof T, T>(p: K, list: ReadonlyArray<T>): Array<T[K]>;
         pluck<T>(p: number, list: ReadonlyArray<{ [k: number]: T }>): T[];
         pluck<P extends string>(p: P): <T>(list: ReadonlyArray<Record<P, T>>) => T[];
         pluck(p: number): <T>(list: ReadonlyArray<{ [k: number]: T }>) => T[];
@@ -2081,6 +2301,7 @@ declare namespace R {
         /**
          * Returns a function that when supplied an object returns the indicated property of that object, if it exists.
          */
+        prop<T>(__: Placeholder, obj: T): <P extends keyof T>(p: P) => T[P];
         prop<P extends keyof T, T>(p: P, obj: T): T[P];
         prop<P extends string>(p: P): <T>(obj: Record<P, T>) => T;
         prop<P extends string, T>(p: P): (obj: Record<P, T>) => T;
@@ -2129,7 +2350,7 @@ declare namespace R {
          */
         propSatisfies<T, U>(pred: (val: T) => boolean, name: string, obj: U): boolean;
         propSatisfies<T, U>(pred: (val: T) => boolean, name: string): (obj: U) => boolean;
-        propSatisfies<T, U>(pred: (val: T) => boolean): CurriedFunction2<string, U, boolean>;
+        propSatisfies<T, U>(pred: (val: T) => boolean): Curry.Curry<(a: string, b: U) => boolean>;
 
         /**
          * Returns a list of numbers from `from` (inclusive) to `to`
@@ -2154,8 +2375,8 @@ declare namespace R {
          */
         reduceBy<T, TResult>(valueFn: (acc: TResult, elem: T) => TResult, acc: TResult, keyFn: (elem: T) => string, list: ReadonlyArray<T>): { [index: string]: TResult };
         reduceBy<T, TResult>(valueFn: (acc: TResult, elem: T) => TResult, acc: TResult, keyFn: (elem: T) => string): (list: ReadonlyArray<T>) => { [index: string]: TResult };
-        reduceBy<T, TResult>(valueFn: (acc: TResult, elem: T) => TResult, acc: TResult): CurriedFunction2<(elem: T) => string, ReadonlyArray<T>, { [index: string]: TResult }>;
-        reduceBy<T, TResult>(valueFn: (acc: TResult, elem: T) => TResult): CurriedFunction3<TResult, (elem: T) => string, ReadonlyArray<T>, { [index: string]: TResult }>;
+        reduceBy<T, TResult>(valueFn: (acc: TResult, elem: T) => TResult, acc: TResult): Curry.Curry<(a: (elem: T) => string, b: ReadonlyArray<T>) => { [index: string]: TResult }>;
+        reduceBy<T, TResult>(valueFn: (acc: TResult, elem: T) => TResult): Curry.Curry<(a: TResult, b: (elem: T) => string, c: ReadonlyArray<T>) => { [index: string]: TResult }>;
 
         /**
          * Returns a value wrapped to indicate that it is the final value of the reduce and
@@ -2181,8 +2402,8 @@ declare namespace R {
          */
         reduceWhile<T, TResult>(predicate: (acc: TResult, elem: T) => boolean, fn: (acc: TResult, elem: T) => TResult, acc: TResult, list: ReadonlyArray<T>): TResult;
         reduceWhile<T, TResult>(predicate: (acc: TResult, elem: T) => boolean, fn: (acc: TResult, elem: T) => TResult, acc: TResult): (list: ReadonlyArray<T>) => TResult;
-        reduceWhile<T, TResult>(predicate: (acc: TResult, elem: T) => boolean, fn: (acc: TResult, elem: T) => TResult): CurriedFunction2<TResult, ReadonlyArray<T>, TResult>;
-        reduceWhile<T, TResult>(predicate: (acc: TResult, elem: T) => boolean): CurriedFunction3<(acc: TResult, elem: T) => TResult, TResult, ReadonlyArray<T>, TResult>;
+        reduceWhile<T, TResult>(predicate: (acc: TResult, elem: T) => boolean, fn: (acc: TResult, elem: T) => TResult): Curry.Curry<(a: TResult, b: ReadonlyArray<T>) => TResult>;
+        reduceWhile<T, TResult>(predicate: (acc: TResult, elem: T) => boolean): Curry.Curry<(a: (acc: TResult, elem: T) => TResult, b: TResult, c: ReadonlyArray<T>) => TResult>;
 
         /**
          * Similar to `filter`, except that it keeps only values for which the given predicate
@@ -2206,9 +2427,9 @@ declare namespace R {
         /**
          * Replace a substring or regex match in a string with a replacement.
          */
-        replace(pattern: RegExp | string, replacement: string, str: string): string;
-        replace(pattern: RegExp | string, replacement: string): (str: string) => string;
-        replace(pattern: RegExp | string): (replacement: string) => (str: string) => string;
+        replace(pattern: RegExp | string, replacement: string | ((match: string, ...args: any[]) => string), str: string): string;
+        replace(pattern: RegExp | string, replacement: string | ((match: string, ...args: any[]) => string)): (str: string) => string;
+        replace(pattern: RegExp | string): (replacement: string | ((match: string, ...args: any[]) => string)) => (str: string) => string;
 
         /**
          * Returns a new list with the same elements as the original list, just in the reverse order.
@@ -2336,7 +2557,7 @@ declare namespace R {
          * Duplication is determined according to the value returned by applying the supplied predicate to two list elements.
          */
         symmetricDifferenceWith<T>(pred: (a: T, b: T) => boolean, list1: ReadonlyArray<T>, list2: ReadonlyArray<T>): T[];
-        symmetricDifferenceWith<T>(pred: (a: T, b: T) => boolean): CurriedFunction2<ReadonlyArray<T>, ReadonlyArray<T>, T[]>;
+        symmetricDifferenceWith<T>(pred: (a: T, b: T) => boolean): Curry.Curry<(a: ReadonlyArray<T>, b: ReadonlyArray<T>) => T[]>;
 
         /**
          * A function that always returns true. Any passed in parameters are ignored.
@@ -2530,7 +2751,7 @@ declare namespace R {
          * determined according to the value returned by applying the supplied predicate to two list elements.
          */
         unionWith<T>(pred: (a: T, b: T) => boolean, list1: ReadonlyArray<T>, list2: ReadonlyArray<T>): T[];
-        unionWith<T>(pred: (a: T, b: T) => boolean): CurriedFunction2<ReadonlyArray<T>, ReadonlyArray<T>, T[]>;
+        unionWith<T>(pred: (a: T, b: T) => boolean): Curry.Curry<(a: ReadonlyArray<T>, b: ReadonlyArray<T>) => T[]>;
 
         /**
          * Returns a new list containing only one copy of each element in the original list.

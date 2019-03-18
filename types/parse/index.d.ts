@@ -1,4 +1,4 @@
-// Type definitions for parse 2.1.0
+// Type definitions for parse 2.1.1
 // Project: https://parseplatform.org/
 // Definitions by:  Ullisen Media Group <http://ullisenmedia.com>
 //                  David Poetzsch-Heffter <https://github.com/dpoetzsch>
@@ -7,6 +7,8 @@
 //                  Wes Grimes <https://github.com/wesleygrimes>
 //                  Otherwise SAS <https://github.com/owsas>
 //                  Andrew Goldis <https://github.com/agoldis>
+//                  Alexandre Hétu Rivard <https://github.com/AlexandreHetu>
+//                  Jong Eun Lee <https://github.com/yomybaby>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.4
 
@@ -490,7 +492,7 @@ declare namespace Parse {
 
     /**
      * Represents a LiveQuery Subscription.
-     * 
+     *
      * @see https://docs.parseplatform.org/js/guide/#live-queries
      * @see NodeJS.EventEmitter
      *
@@ -556,7 +558,7 @@ subscription.on('close', () => {});
     class LiveQuerySubscription extends NodeJS.EventEmitter {
         /**
          * Creates an instance of LiveQuerySubscription.
-         * 
+         *
          * @param {string} id
          * @param {string} query
          * @param {string} [sessionToken]
@@ -620,6 +622,7 @@ subscription.on('close', () => {});
     class User extends Object {
 
         static current(): User | undefined;
+        static currentAsync(): Promise<User | null>;
         static signUp(username: string, password: string, attrs: any, options?: SignUpOptions): Promise<User>;
         static logIn(username: string, password: string, options?: SuccessFailureOptions): Promise<User>;
         static logOut(): Promise<User>;
@@ -692,12 +695,7 @@ subscription.on('close', () => {});
 
         interface JobRequest {
             params: any;
-        }
-
-        interface JobStatus {
-            error?: (response: any) => void;
-            message?: (response: any) => void;
-            success?: (response: any) => void;
+            message: (response: any) => void;
         }
 
         interface FunctionRequest {
@@ -705,12 +703,6 @@ subscription.on('close', () => {});
             master?: boolean;
             params?: any;
             user?: User;
-        }
-
-        interface FunctionResponse {
-            success: (response: any) => void;
-            error (code: number, response: any): void;
-            error (response: any): void;
         }
 
         interface Cookie {
@@ -734,11 +726,7 @@ subscription.on('close', () => {});
         interface AfterSaveRequest extends TriggerRequest { }
         interface AfterDeleteRequest extends TriggerRequest { }
         interface BeforeDeleteRequest extends TriggerRequest { }
-        interface BeforeDeleteResponse extends FunctionResponse { }
         interface BeforeSaveRequest extends TriggerRequest { }
-        interface BeforeSaveResponse extends FunctionResponse {
-            success: () => void;
-        }
 
         // Read preference describes how MongoDB driver route read operations to the members of a replica set.
         enum ReadPreferenceOption {
@@ -760,19 +748,16 @@ subscription.on('close', () => {});
             objects: Object[]
         }
 
-        interface AfterFindResponse extends FunctionResponse {
-            success: (objects: Object[]) => void;
-        }
-
-        function afterDelete(arg1: any, func?: (request: AfterDeleteRequest) => void): void;
-        function afterSave(arg1: any, func?: (request: AfterSaveRequest) => void): void;
-        function beforeDelete(arg1: any, func?: (request: BeforeDeleteRequest, response: BeforeDeleteResponse) => void): void;
-        function beforeSave(arg1: any, func?: (request: BeforeSaveRequest, response: BeforeSaveResponse) => void): void;
-        function beforeFind(arg1: any, func?: (request: BeforeFindRequest) => void): void;
-        function afterFind(arg1: any, func?: (request: AfterFindRequest, response: AfterFindResponse) => void): void;
-        function define(name: string, func?: (request: FunctionRequest, response: FunctionResponse) => void): void;
+        function afterDelete(arg1: any, func?: (request: AfterDeleteRequest) => Promise<void> | void): void;
+        function afterSave(arg1: any, func?: (request: AfterSaveRequest) => Promise<void> | void): void;
+        function beforeDelete(arg1: any, func?: (request: BeforeDeleteRequest) => Promise<void> | void): void;
+        function beforeSave(arg1: any, func?: (request: BeforeSaveRequest) => Promise<void> | void): void;
+        function beforeFind(arg1: any, func?: (request: BeforeFindRequest) => Promise<void> | void): void;
+        function beforeFind(arg1: any, func?: (request: BeforeFindRequest) => Promise<Query> | Query): void;
+        function afterFind(arg1: any, func?: (request: AfterFindRequest) => Promise<any> | any): void;
+        function define(name: string, func?: (request: FunctionRequest) => Promise<any> | any): void;
         function httpRequest(options: HTTPOptions): Promise<HttpResponse>;
-        function job(name: string, func?: (request: JobRequest, status: JobStatus) => void): HttpResponse;
+        function job(name: string, func?: (request: JobRequest) => Promise<void> | void): HttpResponse;
         function run(name: string, data?: any, options?: RunOptions): Promise<any>;
         function useMasterKey(): void;
 
